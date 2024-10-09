@@ -1,11 +1,10 @@
 import { Router } from "express";
-import { createProduct } from "./handlers/product.js";
+import { createProduct, getProducts } from "./handlers/product.js";
 import { body } from 'express-validator'
+import { handleInpitErrors } from "./middleware/index.js";
 const router = Router()
 
-router.get('/', (req, res) => {
-    res.json('desde get')
-})
+router.get('/', getProducts)
 
 router.post('/',
     //validacion
@@ -16,6 +15,7 @@ router.post('/',
         .isNumeric().withMessage('valor no valido')
         .notEmpty().withMessage('El costo del producto no puede ir vacio')
         .custom(value => value > 0).withMessage('precio no valido'),
+    handleInpitErrors,
     createProduct)
 
 router.put('/', (req, res) => {

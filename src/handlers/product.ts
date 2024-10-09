@@ -1,13 +1,28 @@
 import { Request, Response } from 'express'
 import Product from '../models/Product.model.js'
-import { validationResult } from 'express-validator'
-export const createProduct = async (req: Request, res: Response) => {
-    let erros = validationResult(req)
-    if (!erros.isEmpty()) {
-        return res.status(400).json({ erros: erros.array() })
-    }
-    const product = await Product.create(req.body)
 
-    res.json({ data: product })
+export const getProducts = async (req: Request, res: Response) => {
+    try {
+        const products = await Product.findAll({
+            order: [
+                ['price', 'DESC'],
+            ],
+            attributes: { exclude: ['createdAt', 'updatedAt', 'availability'] }
+        })
+        res.json({ data: products })
+    } catch (error) {
+        console.log(error)
+    }
+}
+export const createProduct = async (req: Request, res: Response) => {
+    try {
+        const product = await Product.create(req.body)
+
+        res.json({ data: product })
+    } catch (error) {
+        console.log(error)
+    }
+
+
 }
 
