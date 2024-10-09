@@ -1,10 +1,14 @@
 import { Router } from "express";
-import { createProduct, getProducts } from "./handlers/product.js";
-import { body } from 'express-validator'
+import { createProduct, getProductById, getProducts } from "./handlers/product.js";
+import { body, param } from 'express-validator'
 import { handleInpitErrors } from "./middleware/index.js";
 const router = Router()
 
 router.get('/', getProducts)
+router.get('/:id',
+    param('id').isInt().withMessage('no es numero'),
+    handleInpitErrors,
+    getProductById)
 
 router.post('/',
     //validacion
