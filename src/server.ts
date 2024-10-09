@@ -1,7 +1,7 @@
 import express from "express";
-import router from "./router";
-import db from "./config/db";
 import colors from 'colors'
+import router from "./router.js";
+import db from "./config/db.js";
 //conectar a bd
 async function connctDB() {
     try {
@@ -16,6 +16,7 @@ async function connctDB() {
 }
 connctDB()
 const server = express()
+server.use(express.json())
 server.use('/api/products', router)
 
 export default server

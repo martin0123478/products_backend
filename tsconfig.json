@@ -6,6 +6,9 @@
             "esnext"
         ],
         "strict": false,
+        "target": "ESNext",
+        "moduleResolution": "NodeNext",
+        "module": "NodeNext",
         "esModuleInterop": true,
         "declaration": true,
         "experimentalDecorators": true,
