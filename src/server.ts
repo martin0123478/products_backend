@@ -2,6 +2,7 @@ import express from "express";
 import colors from 'colors'
 import router from "./router.js";
 import cors, { CorsOptions } from 'cors'
+import morgan from 'morgan'
 import db from "./config/db.js";
 //conectar a bd
 async function connctDB() {
@@ -29,6 +30,7 @@ const corsOptions: CorsOptions = {
 }
 server.use(cors(corsOptions))
 server.use(express.json())
+server.use(morgan('dev'))
 server.use('/api/products', router)
 
 export default server
