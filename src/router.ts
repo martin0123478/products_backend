@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { createProduct, deleteProduct, getProductById, getProducts, updateAvailability, updateProduct } from "./handlers/product.js";
 import { body, param } from 'express-validator'
-import { handleInpitErrors } from "./middleware/index.js";
+import { handleInputErrors } from "./middleware/index.js";
 const router = Router()
 
 router.get('/', getProducts)
 router.get('/:id',
     param('id').isInt().withMessage('no es numero'),
-    handleInpitErrors,
+    handleInputErrors,
     getProductById)
 
 router.post('/',
@@ -19,7 +19,7 @@ router.post('/',
         .isNumeric().withMessage('valor no valido')
         .notEmpty().withMessage('El costo del producto no puede ir vacio')
         .custom(value => value > 0).withMessage('precio no valido'),
-    handleInpitErrors,
+    handleInputErrors,
     createProduct)
 
 router.put('/:id',
@@ -34,18 +34,18 @@ router.put('/:id',
         .custom(value => value > 0).withMessage('precio no valido'),
 
     body('availability').isBoolean().withMessage('valor para disponibilidad no valido'),
-    handleInpitErrors,
+    handleInputErrors,
 
     updateProduct)
 
 router.patch('/:id',
     param('id').isInt().withMessage('no es numero'),
-    handleInpitErrors,
+    handleInputErrors,
     updateAvailability)
 
 router.delete('/:id',
     param('id').isInt().withMessage('no es numero'),
-    handleInpitErrors,
+    handleInputErrors,
     deleteProduct)
 
 export default router
